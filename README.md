@@ -3,7 +3,7 @@ Todo List
 ## Edit
 ## Add
 ## Delete
-## Complete status ???
+## Task Completion status
 
 ## Link
 
