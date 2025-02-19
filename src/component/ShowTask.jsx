@@ -57,6 +57,13 @@ function ShowTask() {
     console.log("Task deleted at index:", index)
   }
   
+  function handleComplete(index,e)
+  {
+    const updatedTodos = [...todoState.todos]
+    updatedTodos[index]["isCompleted"] = e.target.checked
+    todoState.setTodos(updatedTodos)
+    console.log(todoState.todos)
+  }
 
   return (
     <div className='flex flex-col gap-3 border-t-1  p-3 rounded w-full'>
@@ -73,7 +80,7 @@ function ShowTask() {
             <input
               ref={(el) => taskRefs.current[index] = el}  // Set ref for each task dynamically
               readOnly={!editedTasks[index]}
-              className={`${!editedTasks[index] ? "text-gray-900" : "text-gray-400"} focus:outline-none focus:ring-0 focus:border-0`}
+              className={`${!editedTasks[index] ? "text-gray-900" : "text-gray-400"} ease-in-out duration-150 focus:outline-none focus:ring-0 focus:border-0 ${e.isCompleted ? "line-through" : "" }`}
               type='text'
               value={editedTasks[index] || e.task} // Display editedTask or fallback to original task
               placeholder={e.task}
@@ -82,19 +89,26 @@ function ShowTask() {
             />
             <div className='p-2 flex flex-row gap-2 text-medium'>
             <button
-              className='shadow-xl'
+              className={`${e.isCompleted ? "text-gray-400 ease-in-out duration-150" : "text-gray-900 ease-in-out duration-150"} shadow-xl`} 
+              disabled = {e.isCompleted}
               onClick={() => handleEditClick(index)}  // Toggle edit mode for specific task
             >
               <FaRegPenToSquare />
             </button>
             <button 
+            className={` shadow-xl`} 
+            // disabled = {e.isCompleted}
             onClick={(e)=>{handleDelete(e,index)}}
             >
             <MdDeleteOutline />
             </button>
+            <input
+              onClick={(e) => {handleComplete(index,e)}}
+            type='checkbox'
+            />
             </div>
           </div>
-          <p className='p-1 text-xs text-zinc-600 '>
+          <p className={`p-1 text-xs text-zinc-600 ${e.isCompleted ? "line-through ease-in-out duration-150" : "ease-in-out duration-150" } `}>
             {e.date.toString()}
           </p>
         </div>

@@ -19,7 +19,8 @@ function AddUi() {
       todoState.setTodos([...todoState.todos,
         {
           task:task.current.value,
-          date:new Date()
+          date:new Date(),
+          isCompleted:false
         }
       ])
       task.current.value = ""
